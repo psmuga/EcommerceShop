@@ -13,7 +13,7 @@ export const ProductScreen = ({ match }) => {
             setProduct(data);
         };
         fetchProduct();
-    }, [match.params.id]);
+    }, [match]);
 
     return (
         <>
