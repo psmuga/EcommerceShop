@@ -7,7 +7,7 @@ import { listProductDetails } from '../actions/productActions';
 import Loader from '../components/Loader';
 import Message from '../components/Message';
 
-export const ProductScreen = ({ history, match }) => {
+const ProductScreen = ({ history, match }) => {
     const [qty, setQty] = useState(1);
     const dispatch = useDispatch();
 
