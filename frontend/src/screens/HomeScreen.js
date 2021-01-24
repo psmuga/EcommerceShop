@@ -24,9 +24,10 @@ const HomeScreen = ({ match }) => {
     return (
         <>
             <Meta></Meta>
-            {!keyword ? (
+            { !keyword && products && (
                 <ProductCarousel></ProductCarousel>
-            ) : (
+            )}
+            { keyword && (
                 <Link to='/' className='btn btn-light'>
                     Go Back
                 </Link>
@@ -37,17 +38,17 @@ const HomeScreen = ({ match }) => {
             ) : error ? (
                 <Message variant='danger'>{error}</Message>
             ) : (
-                <>
-                    <Row>
-                        {products.map((product) => (
-                            <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
-                                <Product product={product}></Product>
-                            </Col>
-                        ))}
-                    </Row>
-                    <Paginate pages={pages} page={page} keyword={keyword ? keyword : ''}></Paginate>
-                </>
-            )}
+                        <>
+                            <Row>
+                                {products && products.map((product) => (
+                                    <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
+                                        <Product product={product}></Product>
+                                    </Col>
+                                ))}
+                            </Row>
+                            <Paginate pages={pages} page={page} keyword={keyword ? keyword : ''}></Paginate>
+                        </>
+                    )}
         </>
     );
 };
