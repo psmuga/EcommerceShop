@@ -9,12 +9,22 @@ import orderRoutes from './routes/orderRoutes.js';
 import uploadRoutes from './routes/uploadRoutes.js';
 import { notFound, errorHandler } from './middleware/errorMiddleware.js';
 import morgan from 'morgan';
+import { ApolloServer } from 'apollo-server-express';
+import { typeDefs } from './models/typeDefs.js';
+import { resolvers } from './models/resolvers.js';
 
 dotenv.config();
 
 connectDB();
 
 const app = express();
+
+const server = new ApolloServer({
+    typeDefs,
+    resolvers,
+});
+
+server.applyMiddleware({ app });
 
 if (process.env.NODE_ENV === 'development') {
     app.use(morgan('dev'));
@@ -47,4 +57,7 @@ app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
 
-app.listen(PORT, console.log(`Server running in ${process.env.NODE_ENV} mode on port ${PORT}`.yellow.bold));
+app.listen(PORT, () => {
+    console.log(`REST server running in ${process.env.NODE_ENV} mode on port ${PORT}`.yellow.bold);
+    console.log(`GraphQL server running in ${process.env.NODE_ENV} mode on port ${PORT} on path: /graphgl`.yellow.bold);
+});
